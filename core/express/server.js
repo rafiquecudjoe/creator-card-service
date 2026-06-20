@@ -246,6 +246,10 @@ function Server(serverConfig = {}) {
         responseComponents.body.message = error.isApplicationError
           ? error.message
           : 'Some error occured.';
+        // Surface a flat, business-facing error code (e.g. SL02) when an application
+        // error carries one. Guarded by isApplicationError so native error `.code`
+        // values (e.g. from a SyntaxError) never leak. Omitted from JSON otherwise.
+        responseComponents.body.code = error.isApplicationError ? error.code : undefined;
         responseComponents.body.errors = error.details || undefined;
         responseComponents.body.data = error.context;
 
