@@ -9,7 +9,9 @@
     "url": "profold-be-api-1"
   },
   "scripts": {
-    "test": "set USE_MOCK_MODEL=1 && mocha --recursive --require dotenv/config",
+    "start": "node bootstrap.js",
+    "test": "cross-env USE_MOCK_MODEL=1 PINO_LOG_LEVEL=silent mocha --recursive --require dotenv/config",
+    "test:integration": "cross-env RUN_INTEGRATION=1 PINO_LOG_LEVEL=silent mocha --require dotenv/config test/creator-card/integration.test.js",
     "prepare": "husky",
     "commitlint": "commitlint --edit",
     "sync-envs": "node sync-env-files"
@@ -68,6 +70,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "chai": "^4.3.7",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-node": "^4.1.0",
